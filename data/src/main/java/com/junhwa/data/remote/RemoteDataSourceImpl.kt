@@ -1,5 +1,6 @@
 package com.junhwa.data.remote
 
+import com.junhwa.domain.data_source.RemoteDataSource
 import com.junhwa.domain.entity.Goods
 import com.junhwa.domain.entity.Home
 import io.reactivex.rxjava3.core.Single

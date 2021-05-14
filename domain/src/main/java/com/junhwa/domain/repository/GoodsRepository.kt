@@ -9,5 +9,5 @@ interface GoodsRepository {
     fun getHomeData(): Single<Home>
     fun getMoreGoods(lastId: Int): Single<List<Goods>>
     fun getLikeGoods(): Observable<List<Goods>>
-    fun updateLikes(likes: List<Int>)
+    fun updateLikes(likes: IntArray)
 }

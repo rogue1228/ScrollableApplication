@@ -1,7 +1,6 @@
 package com.junhwa.data.repository
 
-import com.junhwa.data.remote.RemoteDataSource
-import com.junhwa.domain.entity.Banner
+import com.junhwa.domain.data_source.RemoteDataSource
 import com.junhwa.domain.entity.Goods
 import com.junhwa.domain.entity.Home
 import com.junhwa.domain.repository.GoodsRepository
@@ -12,7 +11,7 @@ import io.reactivex.rxjava3.subjects.Subject
 
 class GoodsRepositoryImpl(private val remoteDataSource: RemoteDataSource) : GoodsRepository {
     private val goodsSubject: Subject<List<Goods>> = BehaviorSubject.create()
-    private val likesSubject: Subject<List<Int>> = BehaviorSubject.create()
+    private val likesSubject: Subject<IntArray> = BehaviorSubject.create()
 
     override fun getHomeData(): Single<Home> {
         return remoteDataSource.initHome()
@@ -35,7 +34,7 @@ class GoodsRepositoryImpl(private val remoteDataSource: RemoteDataSource) : Good
         }
     }
 
-    override fun updateLikes(likes: List<Int>) {
+    override fun updateLikes(likes: IntArray) {
         likesSubject.onNext(likes)
     }
 }

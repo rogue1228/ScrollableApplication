@@ -1,4 +1,4 @@
-package com.junhwa.data.remote
+package com.junhwa.domain.data_source
 
 import com.junhwa.domain.entity.Goods
 import com.junhwa.domain.entity.Home

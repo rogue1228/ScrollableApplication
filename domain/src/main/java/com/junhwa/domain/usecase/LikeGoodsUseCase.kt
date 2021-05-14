@@ -9,7 +9,7 @@ class LikeGoodsUseCase(private val goodsRepository: GoodsRepository) {
         return goodsRepository.getLikeGoods()
     }
 
-    fun updateLikes(likes: List<Int>) {
+    fun updateLikes(likes: IntArray) {
         goodsRepository.updateLikes(likes)
     }
 }
