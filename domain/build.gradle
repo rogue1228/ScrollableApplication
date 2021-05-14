@@ -13,12 +13,11 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation Deps.kotlinSTDLib
 
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.13-RC4'
-//    implementation "io.reactivex.rxjava3:rxkotlin:3.0.13-RC4"
+    implementation Deps.rxJava3
 
-    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testImplementation Deps.testKotlinJDK8
+    testImplementation Deps.testKotlin
+    testImplementation Deps.testKotlinJunit
 }
