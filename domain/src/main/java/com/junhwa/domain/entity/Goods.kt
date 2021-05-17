@@ -23,7 +23,7 @@ data class Goods(
     private var _like: Boolean = false
 ) {
     val discount: Float = (actualPrice - price) / actualPrice.toFloat() * 100
-    val hasDiscount: Boolean = actualPrice < price
+    val hasDiscount: Boolean = actualPrice > price
 
     fun toggleLike() {
         _like = !_like

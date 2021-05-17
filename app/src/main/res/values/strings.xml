@@ -5,6 +5,7 @@
     <string name="like">좋아요</string>
     <string name="sell_count_format">%1$d개 구매중중</string>
     <string name="pager_indicator_format">%1$d/%2$d</string>
-    <string name="percent_format">%1$d%</string>
+    <string name="percent_format">%1$.0f%%</string>
+    <string name="price_format">%,2d</string>
     <string name="new_badge">NEW</string>
 </resources>

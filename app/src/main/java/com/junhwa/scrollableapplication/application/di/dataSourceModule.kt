@@ -11,6 +11,13 @@ import com.junhwa.scrollableapplication.BuildConfig
 import org.koin.dsl.module
 
 val dataSourceModule = module {
+    single {
+        ChuckerCollector(
+            context = get(),
+            showNotification = BuildConfig.DEBUG,
+            retentionPeriod = RetentionManager.Period.ONE_DAY
+        )
+    }
 
     single<LocalDataSource> { LocalDataSourceImpl(get()) }
     single<RemoteDataSource> {
@@ -22,14 +29,6 @@ val dataSourceModule = module {
                     .collector(get())
                     .build()
             )
-        )
-    }
-
-    single {
-        ChuckerCollector(
-            context = get(),
-            showNotification = BuildConfig.DEBUG,
-            retentionPeriod = RetentionManager.Period.ONE_DAY
         )
     }
 }

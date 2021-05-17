@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.junhwa.scrollableapplication.R
 import com.junhwa.scrollableapplication.databinding.FragmentLikeBinding
 
 class LikeFragment : Fragment() {
@@ -25,7 +27,7 @@ class LikeFragment : Fragment() {
         likeViewModel =
                 ViewModelProvider(this).get(LikeViewModel::class.java)
 
-        _binding = FragmentLikeBinding.inflate(inflater, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_like, container, false)
         val root: View = binding.root
 
         return root
