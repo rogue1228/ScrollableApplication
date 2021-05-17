@@ -1,12 +1,12 @@
 package com.junhwa.scrollableapplication
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.junhwa.scrollableapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +28,5 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_like))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        // navView.setPadding(0, 0, 0, 0)
     }
 }

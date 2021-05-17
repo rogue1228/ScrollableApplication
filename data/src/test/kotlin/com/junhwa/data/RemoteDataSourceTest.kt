@@ -1,15 +1,14 @@
 package com.junhwa.data
 
-import com.junhwa.domain.data_source.RemoteDataSource
 import com.junhwa.data.remote.RemoteDataSourceImpl
 import com.junhwa.data.repository.GoodsRepositoryImpl
+import com.junhwa.domain.data_source.RemoteDataSource
 import com.junhwa.domain.repository.GoodsRepository
 import kotlin.test.Test
 
 class RemoteDataSourceTest {
     private val remoteDataSource: RemoteDataSource = RemoteDataSourceImpl(
         "http://d2bab9i9pr8lds.cloudfront.net",
-        emptyList(),
         emptyList()
     )
 

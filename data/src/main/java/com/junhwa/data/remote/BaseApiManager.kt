@@ -6,17 +6,10 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-abstract class BaseApiManager(
-    private val networkInterceptors: List<Interceptor>,
-    private val interceptors: List<Interceptor>
-) {
+abstract class BaseApiManager(private val interceptors: List<Interceptor>) {
 
     open fun okHttpClientBuilder(): OkHttpClient.Builder {
         val httpClientBuilder = OkHttpClient.Builder()
-
-        networkInterceptors.forEach {
-            httpClientBuilder.addNetworkInterceptor(it)
-        }
 
         interceptors.forEach {
             httpClientBuilder.addInterceptor(it)

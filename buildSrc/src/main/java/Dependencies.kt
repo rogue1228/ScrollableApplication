@@ -8,6 +8,8 @@ object Versions {
     const val rxJava3Versions = "3.0.13-RC4"
 
     const val retrofitVersions = "2.9.0"
+
+    const val chunkVersions = "3.4.0"
 }
 
 object Deps {
@@ -26,6 +28,9 @@ object Deps {
     const val retrofit2GsonConverter =
         "com.squareup.retrofit2:converter-gson:${Versions.retrofitVersions}"
 
+    // network monitor lib
+    const val chucker = "com.github.chuckerteam.chucker:library:${Versions.chunkVersions}"
+
     // unit test lib
     const val testKotlinJDK8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlinVersions}"
     const val testKotlin = "org.jetbrains.kotlin:kotlin-test:${Versions.kotlinVersions}"
@@ -37,5 +42,10 @@ object BuildConfig {
 }
 
 object BuildVersions {
+    const val compileSdkVersion = 30
+    const val buildToolsVersion = "30.0.3"
+
+    const val minSdkVersion = 23
+    const val targetSdkVersion = 30
 
 }

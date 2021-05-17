@@ -6,8 +6,8 @@ import com.junhwa.domain.entity.Home
 import io.reactivex.rxjava3.core.Single
 import okhttp3.Interceptor
 
-class RemoteDataSourceImpl(baseUrl: String, networkInterceptors: List<Interceptor>, interceptors: List<Interceptor>) :
-    BaseApiManager(networkInterceptors = networkInterceptors, interceptors = interceptors),
+class RemoteDataSourceImpl(baseUrl: String, interceptors: List<Interceptor>) :
+    BaseApiManager(interceptors),
     RemoteDataSource {
 
     private val service: ApiService = create(baseUrl, ApiService::class.java)

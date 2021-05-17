@@ -6,6 +6,4 @@ class HomeUseCase(private val goodsRepository: GoodsRepository) {
     fun updateLikes(likes: IntArray) {
         goodsRepository.updateLikes(likes)
     }
-
-
 }
