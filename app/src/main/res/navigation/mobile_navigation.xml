@@ -13,8 +13,8 @@
 
     <fragment
         android:id="@+id/navigation_like"
-        android:name="com.junhwa.scrollableapplication.ui.dashboard.DashboardFragment"
+        android:name="com.junhwa.scrollableapplication.ui.like.LikeFragment"
         android:label="@string/like"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_like" />
 
 </navigation>

@@ -12,4 +12,6 @@
     <color name="text_red">#ff5160</color>
     <color name="text_grey">#777777</color>
 
+    <color name="indicator_black_20">#33000000</color>
+
 </resources>

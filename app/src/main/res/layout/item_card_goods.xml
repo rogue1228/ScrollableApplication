@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/goodsImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_height="194dp"
+        tools:layout_width="162dp" />
+
+    <TextView
+        android:id="@+id/discountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:textColor="@color/text_red"
+        android:textSize="@dimen/normal_text_size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/goodsImage"
+        app:layout_constraintTop_toTopOf="@+id/priceText"
+        tools:text="10%" />
+
+    <TextView
+        android:id="@+id/priceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/normal_text_size"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/discountText"
+        app:layout_constraintTop_toBottomOf="@+id/goodsImage"
+        tools:text="8,200" />
+
+    <TextView
+        android:id="@+id/goodsDescriptionText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text_grey"
+        android:textSize="@dimen/small_text_size"
+        app:layout_constraintEnd_toEndOf="@+id/goodsImage"
+        app:layout_constraintStart_toStartOf="@+id/goodsImage"
+        app:layout_constraintTop_toBottomOf="@+id/priceText"
+        tools:text="[가격실화?!] 가성비 대박 쿨톤!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
+
+    <TextView
+        android:id="@+id/newBadgeImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
+        android:background="@drawable/ic_img_badge_new"
+        android:gravity="center"
+        tools:visibility="gone"
+        android:text="@string/new_badge"
+        android:textSize="10dp"
+        app:layout_constraintStart_toStartOf="@+id/goodsImage"
+        app:layout_constraintTop_toBottomOf="@+id/goodsDescriptionText"/>
+
+    <TextView
+        android:id="@+id/sellCountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="9dp"
+        android:gravity="center"
+        android:textSize="@dimen/small_text_size"
+        app:layout_constraintStart_toEndOf="@+id/newBadgeImage"
+        app:layout_constraintTop_toBottomOf="@+id/goodsDescriptionText"
+        tools:text="1,023개 구매중" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
