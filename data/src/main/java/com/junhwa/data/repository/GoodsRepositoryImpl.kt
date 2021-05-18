@@ -7,6 +7,7 @@ import com.junhwa.domain.entity.Goods
 import com.junhwa.domain.repository.GoodsRepository
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 
@@ -15,10 +16,14 @@ class GoodsRepositoryImpl(
     private val localDataSource: LocalDataSource
 ) : GoodsRepository {
     private val goodsSubject: Subject<List<Goods>> = BehaviorSubject.create()
-    private val likesSubject: Subject<IntArray> = BehaviorSubject.createDefault(localDataSource.likeGoodsIds)
+    private val likesSubject: Subject<IntArray> =
+        BehaviorSubject.createDefault(localDataSource.likeGoodsIds)
+
+    private val likeGoodsList: MutableList<Goods> = mutableListOf()
 
     override fun getGoods(lastId: Int?): Single<List<Goods>> {
         val goodsData = if (lastId == null) {
+            likeGoodsList.clear()
             remoteDataSource.initHome()
                 .map { it.goods }
         } else {
@@ -32,12 +37,16 @@ class GoodsRepositoryImpl(
                 goods.updateLike(likeGoodsIds.contains(goods.id))
             }
 
-            goodsSubject.onNext(likeGoods)
+            likeGoodsList.addAll(likeGoods)
+            goodsSubject.onNext(likeGoodsList)
+
             likeGoods
-        }
+        }.subscribeOn(Schedulers.io())
     }
 
     override fun getLikeGoods(): Observable<List<Goods>> {
+        likesSubject.onNext(localDataSource.likeGoodsIds)
+
         return Observable.combineLatest(goodsSubject, likesSubject) { goodsList, likes ->
             goodsList.filter { likes.contains(it.id) }
         }

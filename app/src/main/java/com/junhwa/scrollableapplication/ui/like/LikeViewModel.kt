@@ -1,13 +1,32 @@
 package com.junhwa.scrollableapplication.ui.like
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.junhwa.domain.entity.Goods
+import com.junhwa.domain.usecase.LikeGoodsUseCase
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
-class LikeViewModel : ViewModel() {
+class LikeViewModel(private val likeGoodsUseCase: LikeGoodsUseCase) : ViewModel(), LikeListener {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is like Fragment"
+    val likeGoods: MutableLiveData<List<Goods>> = MutableLiveData()
+
+    private var likeGoodsDataDisposable: Disposable? = null
+
+    fun loadLikeGoods() {
+        likeGoodsDataDisposable = likeGoodsUseCase.getLikeGoods()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                likeGoods.postValue(it)
+            }
     }
-    val text: LiveData<String> = _text
+
+    override fun updateGoodsLike(goods: Goods) {
+        likeGoodsUseCase.updateLikes(goods.id)
+    }
+
+    fun dispose() {
+        likeGoodsDataDisposable?.dispose()
+    }
 }

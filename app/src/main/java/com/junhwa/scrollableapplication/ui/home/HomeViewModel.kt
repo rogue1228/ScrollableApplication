@@ -11,6 +11,7 @@ import com.junhwa.scrollableapplication.ui.goods.GoodsPagingSource
 import com.junhwa.scrollableapplication.ui.home.banner.BannerListener
 import com.junhwa.scrollableapplication.ui.like.LikeListener
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class HomeViewModel(
@@ -29,8 +30,10 @@ class HomeViewModel(
 
     val bannerData: MutableLiveData<List<Banner>> = MutableLiveData()
 
-    init {
-        homeUseCase.getBanners()
+    private var bannerDataDisposable: Disposable? = null
+
+    fun loadBanner() {
+        bannerDataDisposable = homeUseCase.getBanners()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data, error ->
@@ -43,7 +46,6 @@ class HomeViewModel(
     private val _currentCount: MutableLiveData<Int> = MutableLiveData()
 
     override fun totalCount(): LiveData<Int> = _totalCount
-
     override fun currentItemPosition(): LiveData<Int> = _currentCount
 
     fun updateBannerPageChange(position: Int) {
@@ -52,5 +54,9 @@ class HomeViewModel(
 
     override fun updateGoodsLike(goods: Goods) {
         homeUseCase.updateLikes(goods.id)
+    }
+
+    fun dispose() {
+        bannerDataDisposable?.dispose()
     }
 }

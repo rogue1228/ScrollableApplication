@@ -4,6 +4,7 @@ import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource
 import com.junhwa.domain.entity.Goods
 import com.junhwa.domain.usecase.HomeUseCase
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 
 class GoodsPagingSource(private val homeUseCase: HomeUseCase) : RxPagingSource<Int, Goods>() {
@@ -15,6 +16,7 @@ class GoodsPagingSource(private val homeUseCase: HomeUseCase) : RxPagingSource<I
         val currentPagingKey = params.key
 
         return homeUseCase.getGoods(currentPagingKey)
+            .observeOn(AndroidSchedulers.mainThread())
             .map {
                 LoadResult.Page(
                     data = it,

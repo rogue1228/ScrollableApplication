@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.junhwa.scrollableapplication.R
 import com.junhwa.scrollableapplication.databinding.FragmentHomeBinding
-import com.junhwa.scrollableapplication.ui.goods.GoodsAdapter
+import com.junhwa.scrollableapplication.ui.goods.GoodsPagingAdapter
 import com.junhwa.scrollableapplication.ui.goods.GoodsItemDecoration
 import com.junhwa.scrollableapplication.ui.home.banner.BannerPagerAdapter
 import kotlinx.coroutines.flow.collectLatest
@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val bannerAdapter = BannerPagerAdapter()
-    private val goodsAdapter by lazy { GoodsAdapter { vm.updateGoodsLike(it)} }
+    private val goodsAdapter by lazy { GoodsPagingAdapter { vm.updateGoodsLike(it)} }
 
     private val vm: HomeViewModel by sharedViewModel()
 
@@ -40,8 +40,6 @@ class HomeFragment : Fragment() {
 
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         val root: View = binding.root
-
-
 
         return root
     }
@@ -56,20 +54,13 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        vm.dispose()
     }
 
     private fun initViewModel() {
-        vm.bannerData.observe(viewLifecycleOwner) {
-            bannerAdapter.setBanner(it)
-        }
-
-        _binding?.swipeRefreshView?.setOnRefreshListener {
-            goodsAdapter.refresh()
-        }
-
         viewLifecycleOwner.lifecycleScope.launch {
             goodsAdapter.loadStateFlow.collectLatest { loadState ->
-                _binding?.swipeRefreshView?.isRefreshing = loadState.refresh is LoadState.Loading
+                binding.swipeRefreshView.isRefreshing = loadState.refresh is LoadState.Loading
             }
         }
 
@@ -78,17 +69,27 @@ class HomeFragment : Fragment() {
                 goodsAdapter.submitData(it)
             }
         }
+
+        vm.bannerData.observe(viewLifecycleOwner) {
+            bannerAdapter.setBanner(it)
+        }
+
+        vm.loadBanner()
     }
 
     private fun initViews() {
-        _binding?.goodsRecyclerView?.apply {
+        binding.swipeRefreshView.setOnRefreshListener {
+            goodsAdapter.refresh()
+        }
+
+        binding.goodsRecyclerView.apply {
             adapter = goodsAdapter
             layoutManager = GridLayoutManager(context, 2).apply {
                 addItemDecoration(GoodsItemDecoration(context))
             }
         }
 
-        _binding?.bannerPager?.apply {
+        binding.bannerPager.apply {
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
@@ -99,7 +100,7 @@ class HomeFragment : Fragment() {
             adapter = bannerAdapter
         }
 
-        _binding?.lifecycleOwner = this
-        _binding?.bannerListener = vm
+        binding.lifecycleOwner = this
+        binding.bannerListener = vm
     }
 }
