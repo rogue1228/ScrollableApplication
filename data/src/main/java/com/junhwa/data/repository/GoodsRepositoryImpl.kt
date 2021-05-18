@@ -1,8 +1,8 @@
 package com.junhwa.data.repository
 
 import com.junhwa.domain.data_source.RemoteDataSource
+import com.junhwa.domain.entity.Banner
 import com.junhwa.domain.entity.Goods
-import com.junhwa.domain.entity.Home
 import com.junhwa.domain.repository.GoodsRepository
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -13,19 +13,13 @@ class GoodsRepositoryImpl(private val remoteDataSource: RemoteDataSource) : Good
     private val goodsSubject: Subject<List<Goods>> = BehaviorSubject.create()
     private val likesSubject: Subject<IntArray> = BehaviorSubject.create()
 
-    override fun getHomeData(): Single<Home> {
-        return remoteDataSource.initHome()
-            .doOnSuccess {
-                goodsSubject.onNext(it.goods)
-            }
-    }
-
-    override fun getMoreGoods(lastId: Int): Single<List<Goods>> {
-        return remoteDataSource.getGoods(lastId)
-            .doOnSuccess {
-                val origin = goodsSubject.blockingFirst()
-                goodsSubject.onNext(origin.plus(it))
-            }
+    override fun getGoods(lastId: Int?): Single<List<Goods>> {
+        return if (lastId == null) {
+            remoteDataSource.initHome()
+                .map { it.goods }
+        } else {
+            remoteDataSource.getGoods(lastId)
+        }
     }
 
     override fun getLikeGoods(): Observable<List<Goods>> {
@@ -36,5 +30,10 @@ class GoodsRepositoryImpl(private val remoteDataSource: RemoteDataSource) : Good
 
     override fun updateLikes(likes: IntArray) {
         likesSubject.onNext(likes)
+    }
+
+    override fun getBanners(): Single<List<Banner>> {
+        return remoteDataSource.initHome()
+            .map { it.banners }
     }
 }

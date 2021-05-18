@@ -23,7 +23,7 @@ class LikeFragment : Fragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         likeViewModel =
                 ViewModelProvider(this).get(LikeViewModel::class.java)
 

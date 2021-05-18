@@ -1,5 +1,6 @@
 package com.junhwa.domain.usecase
 
+import com.junhwa.domain.entity.Banner
 import com.junhwa.domain.entity.Goods
 import com.junhwa.domain.entity.Home
 import com.junhwa.domain.repository.GoodsRepository
@@ -10,11 +11,11 @@ class HomeUseCase(private val goodsRepository: GoodsRepository) {
         goodsRepository.updateLikes(likes)
     }
 
-    fun getHomeData(): Single<Home> {
-        return goodsRepository.getHomeData()
+    fun getGoods(lastId: Int?): Single<List<Goods>> {
+        return goodsRepository.getGoods(lastId)
     }
 
-    fun getMoreGoods(lastId: Int): Single<List<Goods>> {
-        return goodsRepository.getMoreGoods(lastId)
+    fun getBanners(): Single<List<Banner>> {
+        return goodsRepository.getBanners()
     }
 }

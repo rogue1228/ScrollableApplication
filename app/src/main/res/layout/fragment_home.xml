@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
+        <variable
+            name="bannerListener"
+            type="com.junhwa.scrollableapplication.ui.home.banner.BannerListener" />
+    </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshView"
@@ -22,8 +26,12 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/bannerPager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:layout_height="263dp"
+                    android:layout_height="280dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/goodsRecyclerView"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,6 +48,7 @@
                     android:paddingBottom="3dp"
                     android:textColor="@color/white"
                     android:textSize="@dimen/medium_text_size"
+                    android:text="@{@string/pager_indicator_format(bannerListener.currentItemPosition(), bannerListener.totalCount())}"
                     app:layout_constraintBottom_toBottomOf="@+id/bannerPager"
                     app:layout_constraintEnd_toEndOf="@+id/bannerPager"
                     tools:text="12/12" />
@@ -49,6 +58,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/bannerPager" />
 

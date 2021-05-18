@@ -14,18 +14,14 @@ class GoodsPagingSource(private val homeUseCase: HomeUseCase) : RxPagingSource<I
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, Goods>> {
         val currentPagingKey = params.key
 
-        return if (currentPagingKey == null) {
-            homeUseCase.getHomeData()
-                .map { it.goods }
-        } else {
-            homeUseCase.getMoreGoods(currentPagingKey)
-        }.map {
-            LoadResult.Page(
-                data = it,
-                prevKey = currentPagingKey,
-                nextKey = if (it.isEmpty()) null else it.last().id
-            )
-        }
+        return homeUseCase.getGoods(currentPagingKey)
+            .map {
+                LoadResult.Page(
+                    data = it,
+                    prevKey = currentPagingKey,
+                    nextKey = if (it.isEmpty()) null else it.last().id
+                )
+            }
     }
 
 }
