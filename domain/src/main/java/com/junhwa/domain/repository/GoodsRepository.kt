@@ -10,5 +10,5 @@ interface GoodsRepository {
     fun getGoods(lastId: Int?): Single<List<Goods>>
     fun getLikeGoods(): Observable<List<Goods>>
     fun getBanners(): Single<List<Banner>>
-    fun updateLikes(likes: IntArray)
+    fun updateLikes(likes: Int)
 }

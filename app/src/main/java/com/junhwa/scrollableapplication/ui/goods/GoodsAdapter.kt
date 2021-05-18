@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.junhwa.domain.entity.Goods
 import com.junhwa.scrollableapplication.R
 import com.junhwa.scrollableapplication.databinding.ItemCardGoodsBinding
+import com.junhwa.scrollableapplication.ui.like.LikeListener
 
-class GoodsAdapter(private val likeClick: (Goods) -> Unit) :
+class GoodsAdapter(private val likeGoodsClick: (Goods) -> Unit) :
     PagingDataAdapter<Goods, GoodsAdapter.GoodsViewHolder>(goodsDiffUtil) {
 
     override fun onBindViewHolder(holder: GoodsViewHolder, position: Int) {
         getItem(position)?.let {
-            holder.bind(it, likeClick)
+            holder.bind(it, likeGoodsClick)
         }
     }
 
@@ -32,10 +33,14 @@ class GoodsAdapter(private val likeClick: (Goods) -> Unit) :
 
     class GoodsViewHolder(private val binding: ItemCardGoodsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(goods: Goods, likeClick: (Goods) -> Unit) {
+        fun bind(goods: Goods, likeGoodsClick: (Goods) -> Unit) {
             binding.goods = goods
-
-
+            binding.goodsLikeToggle.setOnClickListener {
+                val enable = !it.isSelected
+                it.isSelected = enable
+                goods.updateLike(enable)
+                likeGoodsClick.invoke(goods)
+            }
         }
     }
 

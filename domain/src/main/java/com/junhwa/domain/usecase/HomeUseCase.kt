@@ -7,7 +7,7 @@ import com.junhwa.domain.repository.GoodsRepository
 import io.reactivex.rxjava3.core.Single
 
 class HomeUseCase(private val goodsRepository: GoodsRepository) {
-    fun updateLikes(likes: IntArray) {
+    fun updateLikes(likes: Int) {
         goodsRepository.updateLikes(likes)
     }
 

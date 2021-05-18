@@ -1,5 +1,6 @@
 package com.junhwa.data.repository
 
+import com.junhwa.domain.data_source.LocalDataSource
 import com.junhwa.domain.data_source.RemoteDataSource
 import com.junhwa.domain.entity.Banner
 import com.junhwa.domain.entity.Goods
@@ -9,16 +10,30 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 
-class GoodsRepositoryImpl(private val remoteDataSource: RemoteDataSource) : GoodsRepository {
+class GoodsRepositoryImpl(
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
+) : GoodsRepository {
     private val goodsSubject: Subject<List<Goods>> = BehaviorSubject.create()
-    private val likesSubject: Subject<IntArray> = BehaviorSubject.create()
+    private val likesSubject: Subject<IntArray> = BehaviorSubject.createDefault(localDataSource.likeGoodsIds)
 
     override fun getGoods(lastId: Int?): Single<List<Goods>> {
-        return if (lastId == null) {
+        val goodsData = if (lastId == null) {
             remoteDataSource.initHome()
                 .map { it.goods }
         } else {
             remoteDataSource.getGoods(lastId)
+        }
+
+        val likeGoodsIds = localDataSource.likeGoodsIds
+
+        return goodsData.map { goodsList ->
+            val likeGoods = goodsList.map { goods ->
+                goods.updateLike(likeGoodsIds.contains(goods.id))
+            }
+
+            goodsSubject.onNext(likeGoods)
+            likeGoods
         }
     }
 
@@ -28,8 +43,19 @@ class GoodsRepositoryImpl(private val remoteDataSource: RemoteDataSource) : Good
         }
     }
 
-    override fun updateLikes(likes: IntArray) {
-        likesSubject.onNext(likes)
+    override fun updateLikes(likes: Int) {
+        val mutableData = localDataSource.likeGoodsIds.toMutableList()
+
+        if (mutableData.contains(likes)) {
+            mutableData.remove(likes)
+        } else {
+            mutableData.add(likes)
+        }
+
+        val newData = mutableData.toIntArray()
+
+        localDataSource.likeGoodsIds = newData
+        likesSubject.onNext(newData)
     }
 
     override fun getBanners(): Single<List<Banner>> {

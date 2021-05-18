@@ -28,9 +28,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val bannerAdapter = BannerPagerAdapter()
-    private val goodsAdapter = GoodsAdapter {
-
-    }
+    private val goodsAdapter by lazy { GoodsAdapter { vm.updateGoodsLike(it)} }
 
     private val vm: HomeViewModel by sharedViewModel()
 

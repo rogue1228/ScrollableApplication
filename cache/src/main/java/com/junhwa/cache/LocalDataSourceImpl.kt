@@ -13,7 +13,7 @@ class LocalDataSourceImpl(context: Context): LocalDataSource {
         } ?: IntArray(0)
         set(value) {
             value.map(Int::toString).let {
-                pref?.edit()?.putStringSet(LIKE_GOODS_IDS, it.toSet())
+                pref?.edit()?.putStringSet(LIKE_GOODS_IDS, it.toSet())?.commit()
             }
         }
 

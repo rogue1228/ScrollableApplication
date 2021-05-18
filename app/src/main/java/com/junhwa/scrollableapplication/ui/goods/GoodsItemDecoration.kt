@@ -4,9 +4,10 @@ import android.content.Context
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.junhwa.scrollableapplication.ui.dip
 
 class GoodsItemDecoration(context: Context): RecyclerView.ItemDecoration() {
-    private val spacing: Int = (context.resources.displayMetrics.density * 12 + 0.5).toInt()
+    private val spacing: Int = context.dip(12f).toInt()
     private val spanCount = 2
 
     override fun getItemOffsets(
