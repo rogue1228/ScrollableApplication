@@ -4,6 +4,7 @@ import com.junhwa.domain.entity.Banner
 import com.junhwa.domain.entity.Goods
 import com.junhwa.domain.entity.Home
 import com.junhwa.domain.repository.GoodsRepository
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 class HomeUseCase(private val goodsRepository: GoodsRepository) {
@@ -15,7 +16,7 @@ class HomeUseCase(private val goodsRepository: GoodsRepository) {
         return goodsRepository.getGoods(lastId)
     }
 
-    fun getBanners(): Single<List<Banner>> {
+    fun getBanners(): Observable<List<Banner>> {
         return goodsRepository.getBanners()
     }
 }

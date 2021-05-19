@@ -4,6 +4,7 @@ import com.junhwa.domain.data_source.LocalDataSource
 import com.junhwa.domain.data_source.RemoteDataSource
 import com.junhwa.domain.entity.Banner
 import com.junhwa.domain.entity.Goods
+import com.junhwa.domain.entity.Home
 import com.junhwa.domain.repository.GoodsRepository
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -15,6 +16,7 @@ class GoodsRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : GoodsRepository {
+    private val bannerSubject: Subject<List<Banner>> = BehaviorSubject.create()
     private val goodsSubject: Subject<List<Goods>> = BehaviorSubject.create()
     private val likesSubject: Subject<IntArray> =
         BehaviorSubject.createDefault(localDataSource.likeGoodsIds)
@@ -25,7 +27,10 @@ class GoodsRepositoryImpl(
         val goodsData = if (lastId == null) {
             likeGoodsList.clear()
             remoteDataSource.initHome()
-                .map { it.goods }
+                .map {
+                    bannerSubject.onNext(it.banners)
+                    it.goods
+                }
         } else {
             remoteDataSource.getGoods(lastId)
         }
@@ -67,8 +72,7 @@ class GoodsRepositoryImpl(
         likesSubject.onNext(newData)
     }
 
-    override fun getBanners(): Single<List<Banner>> {
-        return remoteDataSource.initHome()
-            .map { it.banners }
+    override fun getBanners(): Observable<List<Banner>> {
+        return bannerSubject
     }
 }

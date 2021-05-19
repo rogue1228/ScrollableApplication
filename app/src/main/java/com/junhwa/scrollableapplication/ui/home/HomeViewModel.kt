@@ -1,5 +1,6 @@
 package com.junhwa.scrollableapplication.ui.home
 
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -36,7 +37,8 @@ class HomeViewModel(
         bannerDataDisposable = homeUseCase.getBanners()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { data, error ->
+            .subscribe { data ->
+                Log.d("receive data", data.toString())
                 bannerData.postValue(data)
                 _totalCount.postValue(data.size)
             }

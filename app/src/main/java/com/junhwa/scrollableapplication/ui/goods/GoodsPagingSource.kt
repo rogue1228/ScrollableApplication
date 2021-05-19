@@ -2,6 +2,7 @@ package com.junhwa.scrollableapplication.ui.goods
 
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource
+import com.junhwa.domain.entity.Banner
 import com.junhwa.domain.entity.Goods
 import com.junhwa.domain.usecase.HomeUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
