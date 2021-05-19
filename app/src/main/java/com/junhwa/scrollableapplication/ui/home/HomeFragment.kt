@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.junhwa.scrollableapplication.R
 import com.junhwa.scrollableapplication.databinding.FragmentHomeBinding
+import com.junhwa.scrollableapplication.ui.getDisplayWidth
 import com.junhwa.scrollableapplication.ui.goods.GoodsPagingAdapter
 import com.junhwa.scrollableapplication.ui.goods.GoodsItemDecoration
 import com.junhwa.scrollableapplication.ui.home.banner.BannerPagerAdapter
@@ -97,6 +98,7 @@ class HomeFragment : Fragment() {
                 }
             })
 
+            layoutParams.height = ((activity?.getDisplayWidth() ?: 0) * 0.73).toInt()
             adapter = bannerAdapter
         }
 

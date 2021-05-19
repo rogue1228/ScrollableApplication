@@ -26,10 +26,11 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/bannerPager"
                     android:layout_width="match_parent"
-                    android:layout_height="280dp"
+                    android:layout_height="wrap_content"
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
+                    tools:layout_height="200dp"
                     app:layout_constraintBottom_toTopOf="@+id/goodsRecyclerView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
